@@ -1,12 +1,12 @@
 import os
+import cv2
 import json
 import pickle
 import numpy as np
+import matplotlib.pyplot as plt
 from skimage.feature import hog
 from scipy.spatial.distance import cdist
 from .preprocessing import XRayPreprocessor
-# from preprocessing import XRayPreprocessor
-
 
 """
 buat ngetes gambar baru
@@ -45,7 +45,6 @@ class ImageRetriever:
 
         hasil_retrieve = [self.database[idx] for idx in indeks_terdekat]
 
-        # --- PANGGIL VISUALISASI DI SINI SEBELUM DI-RETURN ---
         # Kita ambil juga nilai jaraknya untuk ditampilkan sebagai skor kemiripan
         jarak_3_teratas = [jarak[idx] for idx in indeks_terdekat]
         self.tampilkan_plot_retrieval(path_gambar_baru, hasil_retrieve, jarak_3_teratas)
@@ -53,26 +52,27 @@ class ImageRetriever:
         return hasil_retrieve
 
     def tampilkan_plot_retrieval(self, path_kueri, hasil_retrieve, list_jarak):
-        """Fungsi pembantu khusus membuat layout gambar bersebelahan"""
         # Bikin kanvas plot 1 baris dengan 4 kolom (1 kueri + 3 hasil)
         fig, axes = plt.subplots(1, 4, figsize=(15, 5))
 
-        # 1. Plot Gambar Baru (Kueri) di kolom pertama
+        # Plot Gambar Baru (Kueri) di kolom pertama
         img_kueri = cv2.imread(path_kueri, cv2.IMREAD_GRAYSCALE)
         axes[0].imshow(img_kueri, cmap='gray')
         axes[0].set_title("GAMBAR BARU (QUERY)", color='blue', fontweight='bold')
         axes[0].axis('off') # Hilangkan angka koordinat biar bersih
 
-        # 2. Plot 3 Gambar Kembarannya di kolom berikutnya
+        # Plot 3 Gambar Kembarannya di kolom berikutnya
         for i, data in enumerate(hasil_retrieve):
             path_db = data['path_asli']
             img_db = cv2.imread(path_db, cv2.IMREAD_GRAYSCALE)
-
-            # Tampilkan di indeks axes ke-1, 2, dan 3
             axes[i+1].imshow(img_db, cmap='gray')
-            # Kasih judul nama file dan jarak matematikanya (makin kecil jarak = makin mirip)
+
+            # (makin kecil jarak = makin mirip)
             axes[i+1].set_title(f"Rank {i+1}\nDist: {list_jarak[i]:.4f}", color='green')
             axes[i+1].axis('off')
 
         plt.tight_layout()
-        plt.show()
+        nama_file_hasil = "hasil_pencarian_terdekat.png"
+        plt.savefig(nama_file_hasil, dpi=150)
+        print(f"[done] visualisasi disimpan ke: {nama_file_hasil}")
+        plt.close()
