@@ -7,7 +7,8 @@ from sklearn.decomposition import PCA
 from .preprocessing import XRayPreprocessor
 """
 karena ini lebih mengarah pada penelitian,
-jadi databasenya menggunakan file jsonl
+jadi databasenya cukup pake file jsonl
+gausah pake database server server lah
 """
 
 class XRayDatabaseBuilder:
@@ -45,9 +46,9 @@ class XRayDatabaseBuilder:
 
         with open(output_pickle_path, 'wb') as f:
             pickle.dump(self.pca, f)
-        print(f"Model PCA sukses disimpan ke -> {output_pickle_path}")
+        print(f"Model PCA disimpan ke => {output_pickle_path}")
 
-        print("\nhasil embedding ke Database (.jsonl) ---")
+        print("\nhasil embedding ke Database (.jsonl)")
         with open(output_jsonl_path, 'w') as f:
             for i in range(len(list_path_asli)):
                 data_objek = {
