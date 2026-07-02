@@ -2,8 +2,7 @@ from PIL import Image
 import numpy as np
 import json
 import os
-
-
+from config.constant import DELIMITER
 
 def decode_lsb(image_path: str):
     img = Image.open(image_path).convert("RGB")

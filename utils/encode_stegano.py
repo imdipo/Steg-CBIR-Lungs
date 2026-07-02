@@ -3,7 +3,7 @@ import os
 import sys
 import numpy as np
 from PIL import Image
-from config import constant
+from config.constant import DELIMITER
 
 JSONL_FILE  = "pathData.jsonl"
 OUTPUT_DIR  = "Hasil_Stegano"
