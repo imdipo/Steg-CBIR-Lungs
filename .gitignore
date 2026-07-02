@@ -1,0 +1,11 @@
+dataset/
+Dataset_Paru/
+Eval/
+Metadata/
+
+pathData.jsonl
+
+__pycache__/
+*.pyc
+.DS_Store
+*.zip
