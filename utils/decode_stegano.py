@@ -27,7 +27,7 @@ def decode_single(path: str):
 
     if pesan_rahasia:
         try:
-            data_pasien = json.load(pesan_rahasia)
+            data_pasien = json.loads(pesan_rahasia)
             return data_pasien
         except (ValueError, SyntaxError) as e:
             print(f"Gagal parse struktur data dari gambar: {path} | Error: {e}")
