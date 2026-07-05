@@ -1,9 +1,9 @@
 import os
 from collections import Counter
-import decode_stegano
+from .decode_stegano import decode_single
 
 def prediksi_kondisi_gambar_baru(path_gambar_baru, retriever_object):
-    top_3 = retriever_object.cari_3_terdekat(path_gambar_baru)
+    top_3, jarak_3_teratas = retriever_object.cari_3_terdekat(path_gambar_baru)
 
     if not top_3:
         print("Gambar tidak dapat diproses atau tidak ditemukan kembarannya")
@@ -16,7 +16,7 @@ def prediksi_kondisi_gambar_baru(path_gambar_baru, retriever_object):
         path_stegano_db = data['path_asli']
 
         # Ekstrak dictionary metadata pasien dari gambar stegano
-        info_pasien = decode_stegano.decode_single(path_stegano_db)
+        info_pasien = decode_single(path_stegano_db)
 
         if info_pasien and 'kondisi' in info_pasien:
             kondisi_penyakit = info_pasien['kondisi']
@@ -24,13 +24,19 @@ def prediksi_kondisi_gambar_baru(path_gambar_baru, retriever_object):
 
             print(f"  terdekat {idx}: {os.path.basename(path_stegano_db)} | Kondisi Pasien: {kondisi_penyakit}")
         else:
+            list_kondisi.append("No Metadata")
             print(f"  terdekat {idx}: {os.path.basename(path_stegano_db)} | [TIDAK ADA METADATA]")
 
-    if list_kondisi:
-        hitung_data = Counter(list_kondisi)
-        kondisi_terbanyak = hitung_data.most_common(1)[0][0]
+        if list_kondisi:
+            hitung_data = Counter(list_kondisi)
+            kondisi_terbanyak = hitung_data.most_common(1)[0][0]
+            print(f"=> Kesimpulan Prediksi (Voting terbanyak): {kondisi_terbanyak}")
+            
+            # BARU KITA PANGGIL PLOTNYA DI SINI! Kirim semua datanya lengkap
+            retriever_object.tampilkan_plot_retrieval(
+                path_gambar_baru, top_3, jarak_3_teratas, list_kondisi, kondisi_terbanyak
+            )
 
-        print(f"=> Kesimpulan Prediksi (Voting terbanyak): {kondisi_terbanyak}")
-        return kondisi_terbanyak
+            return kondisi_terbanyak
 
     return "Unknown"
