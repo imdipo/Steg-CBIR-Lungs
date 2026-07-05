@@ -9,9 +9,9 @@ from utils.predict_images import prediksi_kondisi_gambar_baru
 folder_dataset = Path("Dataset_Paru")
 folder_metadata = Path("Metadata")
 
-FOLDER_STEGANO = "Hasil_Stegano"
-FILE_DATABASE = "pasangan_img_emb.jsonl"
-FILE_PICKLE = "pickle_PCA.pkl"
+FOLDER_STEGANO = Path("Hasil_Stegano")
+FILE_DATABASE = Path("pasangan_img_emb.jsonl")
+FILE_PICKLE = Path("pickle_PCA.pkl")
 
 
 def proses_data_dulu():
@@ -35,10 +35,19 @@ def proses_data_dulu():
     )
 
 def tes_gambar_baru():
-    path_gambar = input("path gambar yang mau dicek (contoh: test.png): ").strip
+    if not FILE_PICKLE.is_file():
+        print("ga ada file picklenya, jalanin dulu tahap 1")
+        return
+        
+    if not FILE_DATABASE.is_file():
+        print("ga ada file jsonlnya, jalanin dulu tahap 1")
+        return
+
+    path_gambar = input("path gambar yang mau dicek (contoh: test.png): ").strip().replace('"', '').replace("\\","/")
 
     if not Path(path_gambar).exists():
         print(f"{path_gambar} ga ketemu")
+        return
 
     retriever = ImageRetriever(FILE_PICKLE, FILE_DATABASE)
 
