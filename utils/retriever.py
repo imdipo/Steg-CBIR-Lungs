@@ -43,22 +43,23 @@ class ImageRetriever:
         jarak = cdist([vektor_baru], semua_vektor_db, metric='euclidean')[0]
         indeks_terdekat = np.argsort(jarak)[:3]
 
+
         hasil_retrieve = [self.database[idx] for idx in indeks_terdekat]
-
-        # Kita ambil juga nilai jaraknya untuk ditampilkan sebagai skor kemiripan
         jarak_3_teratas = [jarak[idx] for idx in indeks_terdekat]
-        self.tampilkan_plot_retrieval(path_gambar_baru, hasil_retrieve, jarak_3_teratas)
+        # Kita ambil juga nilai jaraknya untuk ditampilkan sebagai skor kemiripan
 
-        return hasil_retrieve
+        # self.tampilkan_plot_retrieval(path_gambar_baru, hasil_retrieve, jarak_3_teratas)
 
-    def tampilkan_plot_retrieval(self, path_kueri, hasil_retrieve, list_jarak):
+        return hasil_retrieve, jarak_3_teratas
+
+    def tampilkan_plot_retrieval(self, path_kueri, hasil_retrieve, list_jarak, list_kondisi, prediksi_akhir):
         # Bikin kanvas plot 1 baris dengan 4 kolom (1 kueri + 3 hasil)
-        fig, axes = plt.subplots(1, 4, figsize=(15, 5))
+        fig, axes = plt.subplots(1, 4, figsize=(16, 5))
 
         # Plot Gambar Baru (Kueri) di kolom pertama
         img_kueri = cv2.imread(path_kueri, cv2.IMREAD_GRAYSCALE)
         axes[0].imshow(img_kueri, cmap='gray')
-        axes[0].set_title("GAMBAR BARU (QUERY)", color='blue', fontweight='bold')
+        axes[0].set_title(f"GAMBAR BARU (QUERY)\nPrediksi: {prediksi_akhir}", color='blue', fontweight='bold')
         axes[0].axis('off') # Hilangkan angka koordinat biar bersih
 
         # Plot 3 Gambar Kembarannya di kolom berikutnya
@@ -67,8 +68,10 @@ class ImageRetriever:
             img_db = cv2.imread(path_db, cv2.IMREAD_GRAYSCALE)
             axes[i+1].imshow(img_db, cmap='gray')
 
+            kondisi = list_kondisi[i] if i < len(list_kondisi) else "Unknown"
+
             # (makin kecil jarak = makin mirip)
-            axes[i+1].set_title(f"Rank {i+1}\nDist: {list_jarak[i]:.4f}", color='green')
+            axes[i+1].set_title(f"Rank {i+1} ({kondisi})\nDist: {list_jarak[i]:.4f}", color='green')
             axes[i+1].axis('off')
 
         plt.tight_layout()
