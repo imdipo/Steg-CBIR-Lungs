@@ -2,6 +2,7 @@ dataset/
 Dataset_Paru/
 Eval/
 Metadata/
+Hasil_Stegano/
 
 pathData.jsonl
 
@@ -9,3 +10,4 @@ __pycache__/
 *.pyc
 .DS_Store
 *.zip
+*.pkl
