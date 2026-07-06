@@ -1,6 +1,9 @@
 # Secure Content-Based Image Retrieval (SCBIR) for X-Ray Images
 
 Proyek ini adalah sistem **Content-Based Image Retrieval (CBIR)** sederhana yang dirancang untuk menganalisis dan mencari kemiripan gambar medis (gambar X-Ray paru paru). "Secure" karena informasi metadata pasien (nama, jenis penyakit) disimpan didalam gambarnya dengan metode Stegano LSB (least significant bit). awalnya mau menggunakan stegano-GAN tapi diluar lingkup mata kuliah 
+
+link google collab:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1MCFzlKpOqi62k-if9NI3DbhtMNTB15Ht?usp=sharing)
 ---
 
 ## Fitur Utama
