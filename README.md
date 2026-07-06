@@ -18,12 +18,12 @@ projek ini terbagi kedalam 2 alur utama, yaitu:
 
 1. alur input gambar (mencakup steganography, preprocessing, embedding) 
 
-[alur input](asset/workflow_inputdata.png)
+![alur input](asset/workflow_inputdata.png)
 
 
 2. dan alur ketika gambar baru ingin di cek (mencakup retrieve, decoding, voting)
 
-[alur input](asset/workflow_cekData.png)
+![alur output](asset/workflow_cekData.png)
 
 ---
 
