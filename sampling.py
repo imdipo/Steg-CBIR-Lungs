@@ -1,6 +1,17 @@
 from pathlib import Path
 import shutil
 
+"""
+sudah wajib ada sebuah folder "dataset"
+berisi sub-folder penyakit jadi misalkan:
+    dataset/
+        kanker/ gambar.png/.jpeg
+        tbc/ gambar.png/.jpeg
+        normal/ gambar.png/.jpeg
+    ...
+
+"""
+
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_ASAL = BASE_DIR / "dataset"
 DATASET_TUJUAN = Path("Eval")
