@@ -13,6 +13,20 @@ link google collab:
 
 ---
 
+## Workflow
+projek ini terbagi kedalam 2 alur utama, yaitu: 
+
+1. alur input gambar (mencakup steganography, preprocessing, embedding) 
+
+[alur input](asset/workflow_inputdata.png)
+
+
+2. dan alur ketika gambar baru ingin di cek (mencakup retrieve, decoding, voting)
+
+[alur input](asset/workflow_cekData.png)
+
+---
+
 ## Prerequisites
 Sebelum menjalankan aplikasi, pastikan perangkat Anda sudah terinstal:
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/) (Pastikan Docker Engine dalam status *Running*).
